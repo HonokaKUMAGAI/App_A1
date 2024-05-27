@@ -1,13 +1,12 @@
 package com.example.demo;
 
 import java.util.List;
-import java.util.Locale.Category;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ExpensesRepository extends JpaRepository<Category, Integer> {
-	public List<Category> findAllByKindsAndUserId(int kind, int user) ;
+public interface ExpensesRepository extends JpaRepository<Expenses, Integer> {
+	public List<Expenses> findAllByKindsAndUserId(int kind, int user) ;
 
-	public List<Category> findAllByKinds(int kind) ;
+	public List<Expenses> findAllByKinds(int kind) ;
 
 }

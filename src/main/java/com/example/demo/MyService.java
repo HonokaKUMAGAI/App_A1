@@ -1,7 +1,6 @@
 package com.example.demo;
 
 import java.util.List;
-import java.util.Locale.Category;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,25 +10,25 @@ import org.springframework.stereotype.Service;
 public class MyService {
 
 	@Autowired
-	ExpensesRepository categoryRepo;
+	ExpensesRepository expensesRepo;
 
 	//収支毎に
-	public List<Category> getKind(int kind, int user) {
-		List<Category> list = null;
+	public List<Expenses> getKind(int kind, int user) {
+		List<Expenses> list = null;
 		if (user != 0)
-			list = categoryRepo.findAllByKindsAndUserId(kind, user);
+			list = expensesRepo.findAllByKindsAndUserId(kind, user);
 		else
-			list = categoryRepo.findAllByKinds(kind);
+			list = expensesRepo.findAllByKinds(kind);
 		return list;
 	}
 
 	//	収支毎にカテゴリでソート
-	public List<Category> getKindSortedByCategory(int kind, int user) {
-		List<Category> categories;
+	public List<Expenses> getKindSortedByCategory(int kind, int user) {
+		List<Expenses> categories;
         if (user != 0) {
-            categories = categoryRepo.findAllByKindsAndUserId(kind, user);
+            categories = expensesRepo.findAllByKindsAndUserId(kind, user);
         } else {
-            categories = categoryRepo.findAllByKinds(kind);
+            categories = expensesRepo.findAllByKinds(kind);
         }
         return categories.stream()
                 .sorted((t1, t2) -> Integer.compare(t1.getCategory_id(), t2.getCategory_id()))
@@ -37,12 +36,12 @@ public class MyService {
 	}
 
 	//	収支毎に日付でソート
-	public List<Category> getKindSortedByDate(int kind, int user) {
-		List<Category> categories;
+	public List<Expenses> getKindSortedByDate(int kind, int user) {
+		List<Expenses> categories;
         if (user != 0) {
-            categories = categoryRepo.findAllByKindsAndUserId(kind, user);
+            categories = expensesRepo.findAllByKindsAndUserId(kind, user);
         } else {
-            categories = categoryRepo.findAllByKinds(kind);
+            categories = expensesRepo.findAllByKinds(kind);
         }
 		return categories.stream()
 				.sorted((t1, t2) -> t1.getDate().compareToIgnoreCase(t2.getDate()))
@@ -50,12 +49,12 @@ public class MyService {
 	}
 
 	//	収支毎に金額でソート
-	public List<Category> getKindSortedByAmount(int kind, int user) {
-		List<Category> categories;
+	public List<Expenses> getKindSortedByAmount(int kind, int user) {
+		List<Expenses> categories;
         if (user != 0) {
-            categories = categoryRepo.findAllByKindsAndUserId(kind, user);
+            categories = expensesRepo.findAllByKindsAndUserId(kind, user);
         } else {
-            categories = categoryRepo.findAllByKinds(kind);
+            categories = expensesRepo.findAllByKinds(kind);
         }
 		return categories.stream()
 				.sorted((t1, t2) -> t1.getAmount().compareToIgnoreCase(t2.getAmount()))
