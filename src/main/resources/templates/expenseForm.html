@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>家計簿</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/style.css}">
+</head>
+<body>
+    <a href="/"><button>戻る</button></a>
+    <h1>家計簿</h1>
+    <form th:action="@{/expense}" th:object="${expense}" method="post">
+        <input type="hidden" th:field="*{id}"/>
+        <div>
+            <label>費用:</label>
+            <input type="text" list="example" th:field="*{name}" required />
+            <datalist id="example">
+			<option value="食費"></option>
+			<option value="住居費"></option>
+			<option value="水道光熱費"></option>
+			<option value="通信費"></option>
+			<option value="医療費"></option>
+			<option value="交通費"></option>	
+			</datalist>
+        </div>
+        <div>
+            <label>金額:</label>
+            <input type="number" min="0" th:field="*{amount}" step="100" list="example2" required /><small>円</small>
+            <datalist id="example2">
+			<option value="5000"></option>
+			<option value="10000"></option>
+			<option value="20000"></option>
+			<option value="30000"></option>
+			<option value="40000"></option>
+			<option value="50000"></option>	
+			</datalist>
+        </div>
+        <div>
+            <label>登録日付:</label>
+            <input type="date" th:field="*{date}" required />
+        </div>
+        <div>
+            <button type="submit">登録</button>
+        </div>
+    </form>
+
+</body>
+</html>
