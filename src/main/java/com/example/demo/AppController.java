@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -47,4 +48,11 @@ public class AppController {
 		model.addAttribute("exs", exs);
 		return "expensesList";
 	}
+	
+	 @PostMapping("/button")
+	    public String handleButton(@RequestParam(name="input", required=false, defaultValue="") String input, Model model) {
+	        user=1;
+	        model.addAttribute("message", "ボタンが押されました。入力値: " + input);
+	        return "result";
+	    }
 }
