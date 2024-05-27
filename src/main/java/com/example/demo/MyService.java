@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class MyService {
 
 	@Autowired
-	CategoryRepository categoryRepo;
+	ExpensesRepository categoryRepo;
 
 	//収支毎に
 	public List<Category> getKind(int kind, int user) {
