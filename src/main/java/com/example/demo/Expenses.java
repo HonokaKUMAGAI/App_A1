@@ -3,16 +3,16 @@ package com.example.demo;
 import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.Id;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 public class Expenses {
+	
+	@Id
 	private long expenses_id;
+	
 	private int household_id;
 	private int category_id;
 	private int user_id;

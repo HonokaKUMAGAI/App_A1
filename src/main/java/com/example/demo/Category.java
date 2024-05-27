@@ -6,10 +6,11 @@ import lombok.Data;
 
 @Data
 @Entity
-public class HouseHold {
-	
+public class Category {
+
 	@Id
-	private int id;
+	private long id;
+	
 	private String name;
-	private String user_id;
+
 }
