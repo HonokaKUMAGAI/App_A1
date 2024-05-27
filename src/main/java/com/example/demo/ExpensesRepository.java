@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ExpensesRepository extends JpaRepository<Expenses, Integer> {
-	public List<Expenses> findAllByKindsAndUserId(int kind, int user) ;
+import com.example.demo.Expenses.Kind;
 
-	public List<Expenses> findAllByKinds(int kind) ;
+public interface ExpensesRepository extends JpaRepository<Expenses, Integer> {
+	public List<Expenses> findAllByKindsAndUserId(Kind kind, int user) ;
+
+	public List<Expenses> findAllByKinds(Expenses.Kind kind) ;
 
 }

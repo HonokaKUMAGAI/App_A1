@@ -6,58 +6,72 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import  com.example.demo.Expenses.Kind;
+
 @Service
 public class MyService {
 
 	@Autowired
-	ExpensesRepository expensesRepo;
+	ExpensesRepository expensesRepository;
 
 	//収支毎に
-	public List<Expenses> getKind(int kind, int user) {
+	public List<Expenses> getAllByKind(Kind kind, int user) {
 		List<Expenses> list = null;
 		if (user != 0)
-			list = expensesRepo.findAllByKindsAndUserId(kind, user);
+			list = expensesRepository.findAllByKindsAndUserId(kind, user);
 		else
-			list = expensesRepo.findAllByKinds(kind);
+			list = expensesRepository.findAllByKinds(kind);
 		return list;
 	}
 
 	//	収支毎にカテゴリでソート
-	public List<Expenses> getKindSortedByCategory(int kind, int user) {
-		List<Expenses> categories;
-        if (user != 0) {
-            categories = expensesRepo.findAllByKindsAndUserId(kind, user);
-        } else {
-            categories = expensesRepo.findAllByKinds(kind);
-        }
-        return categories.stream()
-                .sorted((t1, t2) -> Integer.compare(t1.getCategory_id(), t2.getCategory_id()))
-                .collect(Collectors.toList());
+	public List<Expenses> getKindSortedByCategory(Kind kind, int user) {
+		List<Expenses> Expenses;
+		if (user != 0) {
+			Expenses = expensesRepository.findAllByKindsAndUserId(kind, user);
+		} else {
+			Expenses = expensesRepository.findAllByKinds(kind);
+		}
+		return Expenses.stream()
+				.sorted((t1, t2) -> Integer.compare(t1.getCategory_id(), t2.getCategory_id()))
+				.collect(Collectors.toList());
 	}
 
 	//	収支毎に日付でソート
-	public List<Expenses> getKindSortedByDate(int kind, int user) {
-		List<Expenses> categories;
-        if (user != 0) {
-            categories = expensesRepo.findAllByKindsAndUserId(kind, user);
-        } else {
-            categories = expensesRepo.findAllByKinds(kind);
-        }
-		return categories.stream()
-				.sorted((t1, t2) -> t1.getDate().compareToIgnoreCase(t2.getDate()))
+	public List<Expenses> getKindSortedByDate(Kind kind, int user) {
+		List<Expenses> Expenses;
+		if (user != 0) {
+			Expenses = expensesRepository.findAllByKindsAndUserId(kind, user);
+		} else {
+			Expenses = expensesRepository.findAllByKinds(kind);
+		}
+		return Expenses.stream()
+				.sorted((t1, t2) -> t1.getDate().compareTo(t2.getDate()))
 				.collect(Collectors.toList());
 	}
 
 	//	収支毎に金額でソート
-	public List<Expenses> getKindSortedByAmount(int kind, int user) {
-		List<Expenses> categories;
-        if (user != 0) {
-            categories = expensesRepo.findAllByKindsAndUserId(kind, user);
-        } else {
-            categories = expensesRepo.findAllByKinds(kind);
-        }
-		return categories.stream()
-				.sorted((t1, t2) -> t1.getAmount().compareToIgnoreCase(t2.getAmount()))
+	public List<Expenses> getKindSortedByAmount(Kind kind, int user) {
+		List<Expenses> Expenses;
+		if (user != 0) {
+			Expenses = expensesRepository.findAllByKindsAndUserId(kind, user);
+		} else {
+			Expenses = expensesRepository.findAllByKinds(kind);
+		}
+		return Expenses.stream()
+				.sorted((t1, t2) -> Integer.compare(t1.getAmount(), t2.getAmount()))
 				.collect(Collectors.toList());
+	}
+
+	public void editTodo(Expenses ex) {
+		expensesRepository.save(ex);
+	}
+
+	public void deleteTodo(int id) {
+		expensesRepository.deleteById(id);
+	}
+
+	public void addTodo(Expenses ex) {
+		expensesRepository.save(ex);
 	}
 }
