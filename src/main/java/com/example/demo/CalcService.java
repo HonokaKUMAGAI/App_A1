@@ -9,13 +9,6 @@ import com.example.demo.Budget.Category;
 
 @Service
 public class CalcService {
-
-	/*
-	 * リポジトリを注入
-	 */
-	@Autowired
-	CalcRepository calcRepository;
-	
 	/*
 	 * 収入と支出は、BudgetManagerってクラスで管理することにしました。
 	 * 計算系のクラスの中に入れてしまうと、総合計を出すメソッドを呼び出して何回も合計を計算しなおしてしまって効率的ではないらしい。

@@ -56,20 +56,4 @@ public class Budget {
 	}
 	private Category category;
 	
-
-//    public Kind getKind() {
-//        return this.kind;
-//    }
-//
-//    public void setKind(Kind kind) {
-//        this.kind = kind;
-//    }
-//
-//    public boolean isIncome() {
-//        return this.kind == Kind.INCOME;
-//    }
-//
-//    public boolean isSpending() {
-//        return this.kind == Kind.SPENDING;
-//    }
 }
