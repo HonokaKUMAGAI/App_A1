@@ -92,8 +92,8 @@ public class MyService {
 		categoryRepository.deleteById(id);
 	}
 	
-	public void setTarget() {
-		TargetSetting.setTarget();
-	}
+//	public void setTarget() {
+//		TargetSetting.setTarget();
+//	}
 	
 }
