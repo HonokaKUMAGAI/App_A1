@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>カテゴリ管理</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
+</head>
+<body>
+<h1>カテゴリ管理</h1>
+
+<!-- Category input form -->
+<form id="addCategoryForm" action="/categories" method="post">
+    <label for="name">新しいカテゴリ:</label>
+    <input type="text" id="name" name="name">
+    <button type="submit">追加</button>
+</form>
+
+<!-- Existing categories -->
+<h2>既存のカテゴリ</h2>
+<ul>
+    <li th:each="category : ${categories}" th:if="${not category.deleted}" style="display:flex;">
+
+        <button th:text="${category.name}" onclick="populateInput(this.textContent)">カテゴリ</button>
+
+        <form th:action="@{'/categories/' + ${category.id} + '/delete'}" method="post">
+            <button type="submit">削除</button>
+        </form>
+    
+    </li>
+</ul>
+
+<a href="/"><button>家計簿に戻る</button></a>
+
+<script>
+    function populateInput(category) {
+        document.getElementById('name').value = category;
+    }
+
+    function deleteCategory(button, categoryId) {
+        var listItem = button.parentNode;
+        listItem.parentNode.removeChild(listItem);
+        // Ajax call to mark category as deleted in backend
+        markCategoryAsDeleted(categoryId);
+    }
+
+    function markCategoryAsDeleted(categoryId) {
+        // Send an Ajax request to mark category as deleted in the backend
+        var xhr = new XMLHttpRequest();
+        xhr.open("PUT", "/categories/delete/" + categoryId, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log("Category marked as deleted successfully");
+            }
+        };
+        xhr.send();
+    }
+</script>
+
+</body>
+</html>

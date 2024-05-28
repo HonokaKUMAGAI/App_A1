@@ -1,84 +1,155 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <title>家計簿</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/style.css}">
 </head>
-
 <body>
 
     <h1>家計簿</h1>
+
+
+<!-- Category input form -->
+<form id="addCategoryForm" action="/categories" method="post">
+    <label for="name">新しいカテゴリ:</label>
+    <input type="text" id="name" name="name">
+    <button type="submit">追加</button>
+</form>
+
+<!-- Existing categories -->
+<h2>既存のカテゴリ</h2>
+<ul>
+    <li th:each="category : ${categories}" th:if="${not category.deleted}" style="display:flex;">
+
+        <button th:text="${category.name}" onclick="populateInput(this.textContent)">カテゴリ</button>
+
+        <form th:action="@{'/categories/' + ${category.id} + '/delete'}" method="post">
+            <button type="submit">削除</button>
+        </form>
+    
+    </li>
+</ul>
+
+
+<button type="button" th:each="category : ${categories}" th:text="${category.name}" th:onclick="'insertCategory(\'' + ${category.name} + '\')'"></button>
+
+	    
     <form th:action="@{/expense}" th:object="${expense}" method="post">
-        <input type="hidden" th:field="*{id}" />
+        <input type="hidden" th:field="*{id}"/>
+        
+
+	    
+    
         <div>
             <label>費用:</label>
             <input type="text" list="example" th:field="*{name}" required />
             <datalist id="example">
-                <option value="食費"></option>
-                <option value="住居費"></option>
-                <option value="水道光熱費"></option>
-                <option value="通信費"></option>
-                <option value="医療費"></option>
-                <option value="交通費"></option>
-            </datalist>
+			<option value="食費"></option>
+			<option value="住居費"></option>
+			<option value="水道光熱費"></option>
+			<option value="通信費"></option>
+			<option value="医療費"></option>
+			<option value="交通費"></option>	
+			</datalist>
         </div>
         <div>
             <label>金額:</label>
             <input type="number" min="0" th:field="*{amount}" step="100" list="example2" required /><small>円</small>
             <datalist id="example2">
-                <option value="5000"></option>
-                <option value="10000"></option>
-                <option value="20000"></option>
-                <option value="30000"></option>
-                <option value="40000"></option>
-                <option value="50000"></option>
-            </datalist>
+			<option value="5000"></option>
+			<option value="10000"></option>
+			<option value="20000"></option>
+			<option value="30000"></option>
+			<option value="40000"></option>
+			<option value="50000"></option>	
+			</datalist>
         </div>
-
+        
         <div>
             <label>登録日付:</label>
             <input type="date" id="today" th:field="*{date}" min="1000-01-01" max="9999-12-31" required />
         </div>
         <div>
-            <div style="display:flex;">メモ：</div><textarea rows="9" cols="30" maxlength="256"
-                placeholder="ご自由に入力してください"></textarea>
+        <div style="display:flex;">メモ：</div><textarea rows="9" cols="30" maxlength="256" placeholder="ご自由に入力してください"></textarea>
         </div>
         <p>
             <button type="submit">登録</button>
         </p>
     </form>
-    <p>
-        <a href="/"><button>キャンセル</button></a>
-    </p>
+<p>
+<a href="/"><button>キャンセル</button></a>
+</p>
 
-    <script type="text/javascript">
-        //今日の日時を表示
+<script type="text/javascript">
+    //今日の日時を表示
         window.onload = function () {
             //今日の日時を表示
             var date = new Date()
             var year = date.getFullYear()
             var month = date.getMonth() + 1
             var day = date.getDate()
-
+          
             var toTwoDigits = function (num, digit) {
-                num += ''
-                if (num.length < digit) {
-                    num = '0' + num
-                }
-                return num
+              num += ''
+              if (num.length < digit) {
+                num = '0' + num
+              }
+              return num
             }
-
+            
             var yyyy = toTwoDigits(year, 4)
             var mm = toTwoDigits(month, 2)
             var dd = toTwoDigits(day, 2)
             var ymd = yyyy + "-" + mm + "-" + dd;
-
+            
             document.getElementById("today").value = ymd;
         }
-    </script>
+</script>
+
+<script th:inline="javascript">
+    function insertCategory(categoryName) {
+        document.getElementById('category').value = categoryName;
+    }
+</script>
+<script th:inline="javascript">
+    /* カテゴリが追加された際に呼び出される関数 */
+    function addCategory(categoryName) {
+        var dropdown = document.getElementById("category"); // ドロップダウンリストの要素を取得
+        var option = document.createElement("option"); // 新しいオプション要素を作成
+        option.text = categoryName; // カテゴリ名を設定
+        option.value = categoryName; // カテゴリ名を値として設定
+        dropdown.add(option); // オプションをドロップダウンリストに追加
+    }
+</script>
+
+
+<script>
+    function populateInput(category) {
+        document.getElementById('name').value = category;
+    }
+
+    function deleteCategory(button, categoryId) {
+        var listItem = button.parentNode;
+        listItem.parentNode.removeChild(listItem);
+        // Ajax call to mark category as deleted in backend
+        markCategoryAsDeleted(categoryId);
+    }
+
+    function markCategoryAsDeleted(categoryId) {
+        // Send an Ajax request to mark category as deleted in the backend
+        var xhr = new XMLHttpRequest();
+        xhr.open("PUT", "/categories/delete/" + categoryId, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log("Category marked as deleted successfully");
+            }
+        };
+        xhr.send();
+    }
+</script>
+
 
 
 </body>
-
 </html>
