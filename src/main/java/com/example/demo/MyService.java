@@ -18,9 +18,9 @@ public class MyService {
 	public List<Expenses> getAllByKind(Kind kind, int user) {
 		List<Expenses> list = null;
 		if (user != 0)
-			list = expensesRepository.findAllByKindsAndUserId(kind, user);
+			list = expensesRepository.findAllByKindAndUserId(kind, user);
 		else
-			list = expensesRepository.findAllByKinds(kind);
+			list = expensesRepository.findAllByKind(kind);
 		return list;
 	}
 
@@ -28,12 +28,12 @@ public class MyService {
 	public List<Expenses> getKindSortedByCategory(Kind kind, int user) {
 		List<Expenses> Expenses;
 		if (user != 0) {
-			Expenses = expensesRepository.findAllByKindsAndUserId(kind, user);
+			Expenses = expensesRepository.findAllByKindAndUserId(kind, user);
 		} else {
-			Expenses = expensesRepository.findAllByKinds(kind);
+			Expenses = expensesRepository.findAllByKind(kind);
 		}
 		return Expenses.stream()
-				.sorted((t1, t2) -> Integer.compare(t1.getCategory_id(), t2.getCategory_id()))
+				.sorted((t1, t2) -> Long.compare(t1.getCategoryId(), t2.getCategoryId()))
 				.collect(Collectors.toList());
 	}
 
@@ -41,9 +41,9 @@ public class MyService {
 	public List<Expenses> getKindSortedByDate(Kind kind, int user) {
 		List<Expenses> Expenses;
 		if (user != 0) {
-			Expenses = expensesRepository.findAllByKindsAndUserId(kind, user);
+			Expenses = expensesRepository.findAllByKindAndUserId(kind, user);
 		} else {
-			Expenses = expensesRepository.findAllByKinds(kind);
+			Expenses = expensesRepository.findAllByKind(kind);
 		}
 		return Expenses.stream()
 				.sorted((t1, t2) -> t1.getDate().compareTo(t2.getDate()))
@@ -54,9 +54,9 @@ public class MyService {
 	public List<Expenses> getKindSortedByAmount(Kind kind, int user) {
 		List<Expenses> Expenses;
 		if (user != 0) {
-			Expenses = expensesRepository.findAllByKindsAndUserId(kind, user);
+			Expenses = expensesRepository.findAllByKindAndUserId(kind, user);
 		} else {
-			Expenses = expensesRepository.findAllByKinds(kind);
+			Expenses = expensesRepository.findAllByKind(kind);
 		}
 		return Expenses.stream()
 				.sorted((t1, t2) -> Integer.compare(t1.getAmount(), t2.getAmount()))

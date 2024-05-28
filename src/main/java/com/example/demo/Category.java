@@ -9,7 +9,7 @@ import lombok.Data;
 public class Category {
 
 	@Id
-	private long id;
+	private long categoryId;
 	
 	private String name;
 

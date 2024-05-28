@@ -11,11 +11,11 @@ import lombok.Data;
 public class Expenses {
 	
 	@Id
-	private long expenses_id;
+	private long expensesId;
 	
-	private int household_id;
-	private int category_id;
-	private int user_id;
+	private long householdId;
+	private long categoryId;
+	private long userId;
 	private int amount;
 	private LocalDate date;
 	private String memo;
@@ -24,7 +24,7 @@ public class Expenses {
 		daily, weekly, monthly, everyyear
 	}
 	
-	Roop roop;
+	private Roop roop;
 
 	public enum Kind {
 		INCOME, SPENDING, OTHER //収入はINCOME、支出はSPENDING、一応その他OTHERも

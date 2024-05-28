@@ -6,13 +6,12 @@ import lombok.Data;
 
 @Data
 @Entity
-public class Target {
+public class User {
 
 	@Id
-	private long targetId;
+	private long userId;
 
-	private long householdId;
-	private long categoryId;
-	private int targetAmounf;
-
+	private String password;
+	private String username;
+	private String email;
 }

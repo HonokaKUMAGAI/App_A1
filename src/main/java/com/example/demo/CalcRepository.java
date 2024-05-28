@@ -5,5 +5,5 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CalcRepository extends JpaRepository<Expenses, Integer>{
-	List<Expenses> findByType(Expenses.Kind type);
+	List<Expenses> findByKind(Expenses.Kind type);
 }

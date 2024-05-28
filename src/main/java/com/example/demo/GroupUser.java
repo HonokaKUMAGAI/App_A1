@@ -2,15 +2,18 @@ package com.example.demo;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import lombok.Data;
 
-@Data
 @Entity
-public class HouseHold {
+public class GroupUser {
 	
 	@Id
-	private long houseHoldId;
+	private long groupId;
 	
-	private String name;
 	private long userId;
+
+	private enum Role {
+		ADMIN, VIEWER, INVITED
+	}
+	private Role role;
+	
 }
