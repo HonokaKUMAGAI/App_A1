@@ -6,72 +6,72 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import  com.example.demo.Budget.Kind;
+import  com.example.demo.Payments.Kind;
 
 @Service
 public class MyService {
 
 	@Autowired
-	BudgetRepository BudgetRepository;
+	PaymentsRepository PaymentsRepository;
 
 	//収支毎に
-	public List<Budget> getAllByKind(Kind kind, int user) {
-		List<Budget> list = null;
+	public List<Payments> getAllByKind(Kind kind, int user) {
+		List<Payments> list = null;
 		if (user != 0)
-			list = BudgetRepository.findAllByKindAndUserId(kind, user);
+			list = PaymentsRepository.findAllByKindAndUserId(kind, user);
 		else
-			list = BudgetRepository.findAllByKind(kind);
+			list = PaymentsRepository.findAllByKind(kind);
 		return list;
 	}
 
 	//	収支毎にカテゴリでソート
-	public List<Budget> getKindSortedByCategory(Kind kind, int user) {
-		List<Budget> Budget;
+	public List<Payments> getKindSortedByCategory(Kind kind, int user) {
+		List<Payments> Payments;
 		if (user != 0) {
-			Budget = BudgetRepository.findAllByKindAndUserId(kind, user);
+			Payments = PaymentsRepository.findAllByKindAndUserId(kind, user);
 		} else {
-			Budget = BudgetRepository.findAllByKind(kind);
+			Payments = PaymentsRepository.findAllByKind(kind);
 		}
-		return Budget.stream()
+		return Payments.stream()
 				.sorted((t1, t2) -> Integer.compare(t1.getCategory_id(), t2.getCategory_id()))
 				.collect(Collectors.toList());
 	}
 
 	//	収支毎に日付でソート
-	public List<Budget> getKindSortedByDate(Kind kind, int user) {
-		List<Budget> Budget;
+	public List<Payments> getKindSortedByDate(Kind kind, int user) {
+		List<Payments> Payments;
 		if (user != 0) {
-			Budget = BudgetRepository.findAllByKindAndUserId(kind, user);
+			Payments = PaymentsRepository.findAllByKindAndUserId(kind, user);
 		} else {
-			Budget = BudgetRepository.findAllByKind(kind);
+			Payments = PaymentsRepository.findAllByKind(kind);
 		}
-		return Budget.stream()
+		return Payments.stream()
 				.sorted((t1, t2) -> t1.getDate().compareTo(t2.getDate()))
 				.collect(Collectors.toList());
 	}
 
 	//	収支毎に金額でソート
-	public List<Budget> getKindSortedByAmount(Kind kind, int user) {
-		List<Budget> Budget;
+	public List<Payments> getKindSortedByAmount(Kind kind, int user) {
+		List<Payments> Payments;
 		if (user != 0) {
-			Budget = BudgetRepository.findAllByKindAndUserId(kind, user);
+			Payments = PaymentsRepository.findAllByKindAndUserId(kind, user);
 		} else {
-			Budget = BudgetRepository.findAllByKind(kind);
+			Payments = PaymentsRepository.findAllByKind(kind);
 		}
-		return Budget.stream()
+		return Payments.stream()
 				.sorted((t1, t2) -> Integer.compare(t1.getAmount(), t2.getAmount()))
 				.collect(Collectors.toList());
 	}
 
-	public void editTodo(Budget ex) {
-		BudgetRepository.save(ex);
+	public void editTodo(Payments ex) {
+		PaymentsRepository.save(ex);
 	}
 
 	public void deleteTodo(int id) {
-		BudgetRepository.deleteById(id);
+		PaymentsRepository.deleteById(id);
 	}
 
-	public void addTodo(Budget ex) {
-		BudgetRepository.save(ex);
+	public void addTodo(Payments ex) {
+		PaymentsRepository.save(ex);
 	}
 }
