@@ -2,12 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>家計簿管理サイト</title>
-	<link rel="stylesheet" type="text/css" th:href="@{/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
 </head>
 <body>
     <h1>家計簿管理サイト</h1>
 
-    
     <table>
         <thead>
             <tr>
@@ -20,23 +19,16 @@
         <tbody>
             <tr th:each="expense : ${expenses}">
                 <td th:text="${expense.name}">費用</td>
-                <td th:text="${expense.amount}+円">金額</td>
+                <td th:text="${expense.amount} + '円'">金額</td>
                 <td th:text="${#dates.format(expense.date, 'yyyy-MM-dd')}">日付</td>
+
                 <td>
                     <a th:href="@{/expense/edit/{id}(id=${expense.id})}"><button>編集</button></a>
-                    <a th:href="@{/expense/delete/{id}(id=${expense.id})}" 
-                       onclick="return confirm('本当に削除しますか？');"><button>削除</button></a>
+                    <a th:href="@{/expense/delete/{id}(id=${expense.id})}" onclick="return confirm('本当に削除しますか？');"><button>削除</button></a>
                 </td>
             </tr>
         </tbody>
     </table>
     <a href="/expense/new"><button>新規登録</button></a>
-    
-
-    
-
 </body>
-
 </html>
-
-

@@ -5,7 +5,7 @@
 	<link rel="stylesheet" type="text/css" th:href="@{/style.css}">
 </head>
 <body>
-    <a href="/"><button>戻る</button></a>
+
     <h1>家計簿</h1>
     <form th:action="@{/expense}" th:object="${expense}" method="post">
         <input type="hidden" th:field="*{id}"/>
@@ -33,14 +33,48 @@
 			<option value="50000"></option>	
 			</datalist>
         </div>
+        
         <div>
             <label>登録日付:</label>
-            <input type="date" th:field="*{date}" required />
+            <input type="date" id="today" th:field="*{date}" min="1000-01-01" max="9999-12-31" required />
         </div>
         <div>
-            <button type="submit">登録</button>
+        <div style="display:flex;">メモ：</div><textarea rows="9" cols="30" maxlength="256" placeholder="ご自由に入力してください"></textarea>
         </div>
+        <p>
+            <button type="submit">登録</button>
+        </p>
     </form>
+<p>
+<a href="/"><button>キャンセル</button></a>
+</p>
+
+<script type="text/javascript">
+    //今日の日時を表示
+        window.onload = function () {
+            //今日の日時を表示
+            var date = new Date()
+            var year = date.getFullYear()
+            var month = date.getMonth() + 1
+            var day = date.getDate()
+          
+            var toTwoDigits = function (num, digit) {
+              num += ''
+              if (num.length < digit) {
+                num = '0' + num
+              }
+              return num
+            }
+            
+            var yyyy = toTwoDigits(year, 4)
+            var mm = toTwoDigits(month, 2)
+            var dd = toTwoDigits(day, 2)
+            var ymd = yyyy + "-" + mm + "-" + dd;
+            
+            document.getElementById("today").value = ymd;
+        }
+</script>
+
 
 </body>
 </html>
