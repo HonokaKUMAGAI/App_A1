@@ -12,15 +12,13 @@ import lombok.Data;
 @Entity
 public class Payments {
 	
-	
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int Id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long paymentsId;
 	
-	private long expenses_id;
-	private int household_id;
-	private int category_id;
-	private int userId;
+	private long householdId;
+	private long categoryId;
+	private long userId;
 	private int amount;
 	private LocalDate date;
 	private String memo;
@@ -29,8 +27,15 @@ public class Payments {
 	 * 期間ごと系
 	 */
 	public enum Period{
-		DAILY, WEEKLY, MONTHLY, EVERY_YEAR}
+		DAILY, MONTHLY, EVERY_YEAR}
 	private Period period;
+	
+	/*
+	 * 固定費の期間管理用
+	 */
+	public enum FixedCostPeriod{
+		DAILY, MONTHLY, EVERY_YEAR} //, WEEKLY
+	private FixedCostPeriod fixedCostPeriod;
 	
 	/*
 	 * 収入か？支出か？分け

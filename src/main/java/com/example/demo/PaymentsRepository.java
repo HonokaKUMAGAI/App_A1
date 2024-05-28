@@ -8,8 +8,11 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.Payments.Kind;
 
 @Repository
-public interface PaymentsRepository extends JpaRepository<Payments, Integer> {
+public interface PaymentsRepository extends JpaRepository<Payments, Long> {
 	public List<Payments> findAllByKindAndUserId(Kind kind, int user) ;
+
 	public List<Payments> findAllByKind(Payments.Kind kind) ;
+	
+	public Payments findAllByCategoryId(long Id) ;
 
 }

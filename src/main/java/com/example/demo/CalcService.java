@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.Budget.Category;
+import com.example.demo.Payments.Category;
 
 @Service
 public class CalcService {
@@ -24,7 +24,7 @@ public class CalcService {
 	/*
 	 * カテゴリごとの割合を算出するメソッド
 	 */
-	public double calculateRatioOfBudget(List<Budget> spending, Category category) {
+	public double calculateRatioOfBudget(List<Payments> spending, Category category) {
 	    // 支出の合計を取得
 	    double totalSpending = paymentsService.getTotalSpending();
 
@@ -47,7 +47,7 @@ public class CalcService {
 	 * カテゴリごとの目標の提案値を出すメソッド
 	 * TargetMagnificationは、0.5かけとか0.8かけとか、倍率を想定。
 	 */
-	public double calculateSavingGoul(List<Budget> spending, Category category, double TargetMagnification) {
+	public double calculateSavingGoul(List<Payments> spending, Category category, double TargetMagnification) {
 	    // 特定のカテゴリの支出を取得
 	    double categorySpending = paymentsService.getCategorySpending(spending, category);
 	    

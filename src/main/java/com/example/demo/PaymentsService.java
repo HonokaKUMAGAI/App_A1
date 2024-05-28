@@ -1,7 +1,6 @@
 package com.example.demo;
 
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.Payments.Category;
 import com.example.demo.Payments.Kind;
+import com.example.demo.Payments.Period;
 
 
 /*

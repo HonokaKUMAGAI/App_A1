@@ -15,6 +15,45 @@
 	<div>
 		<p>ここに１番の機能が入ります</p>
 	</div>
+	
+	<!DOCTYPE html>
+	<html xmlns:th="http://www.thymeleaf.org">
+	
+	<head>
+	    <title>家計簿管理サイト</title>
+	    <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
+	</head>
+	
+	<body>
+	    <h1>家計簿管理サイト</h1>
+	
+	    <table>
+	        <thead>
+	            <tr>
+	                <th>費用</th>
+	                <th>金額</th>
+	                <th>登録日付</th>
+	                <th>操作</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	            <tr th:each="payments : ${paymentss}">
+	                <td th:text="${payments.name}">費用</td>
+	                <td th:text="${payments.amount} + '円'">金額</td>
+	                <td th:text="${#dates.format(payments.date, 'yyyy-MM-dd')}">日付</td>
+	
+	                <td>
+	                    <a th:href="@{/payments/edit/{id}(id=${payments.id})}"><button>編集</button></a>
+	                    <a th:href="@{/payments/delete/{id}(id=${payments.id})}"
+	                        onclick="return confirm('本当に削除しますか？');"><button>削除</button></a>
+	                </td>
+	            </tr>
+	        </tbody>
+	    </table>
+	    <a href="/payments/new"><button>新規登録</button></a>
+	</body>
+	
+	</html>
 </body>
 
 </html>
