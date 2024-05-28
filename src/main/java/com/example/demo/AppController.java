@@ -20,33 +20,33 @@ public class AppController {
 	@Autowired
 	MyService service;
 	
-	private Expenses.Kind kind=Expenses.Kind.SPENDING;
+	private Payments.Kind kind=Payments.Kind.SPENDING;
 	
 	private int user=0;
 	
 	@GetMapping("/home")
-	public String getExpensesList(Model model, @RequestParam(value = "sort", required = false) String sort) {
-		List<Expenses> exs;
+	public String getPaymentsList(Model model, @RequestParam(value = "sort", required = false) String sort) {
+		List<Payments> pays;
 		if (sort != null) {
 			switch (sort) {
 			case "category":
-				exs = service.getKindSortedByCategory(kind,user);
+				pays = service.getKindSortedByCategory(kind,user);
 				break;
 			case "date":
-				exs = service.getKindSortedByDate(kind,user);
+				pays = service.getKindSortedByDate(kind,user);
 				break;
 			case "amount":
-				exs = service.getKindSortedByAmount(kind,user);
+				pays = service.getKindSortedByAmount(kind,user);
 				break;
 			default:
-				exs = service.getAllByKind(kind,user);
+				pays = service.getAllByKind(kind,user);
 				break;
 			}
 		} else {
-			exs = service.getAllByKind(kind,user);
+			pays = service.getAllByKind(kind,user);
 		}
-		model.addAttribute("exs", exs);
-		return "expensesList";
+		model.addAttribute("pays", pays);
+		return "paymentsList";
 	}
 	
 	 @PostMapping("/button")
