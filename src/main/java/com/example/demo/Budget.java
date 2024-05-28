@@ -1,6 +1,6 @@
 package com.example.demo;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,7 +22,7 @@ public class Budget {
 	private int category_id;
 	private int userId;
 	private int amount;
-	private LocalDateTime date;
+	private LocalDate date;
 	private String memo;
 	
 	/*
