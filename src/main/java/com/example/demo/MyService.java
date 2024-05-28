@@ -63,15 +63,37 @@ public class MyService {
 				.collect(Collectors.toList());
 	}
 
+//	収支編集
 	public void editExpense(Expenses ex) {
 		expensesRepository.save(ex);
 	}
-
+//  収支削除
 	public void deleteExpenses(long id) {
 		expensesRepository.deleteById(id);
 	}
-
+//  収支追加
 	public void addExpenses(Expenses ex) {
 		expensesRepository.save(ex);
 	}
+	
+	@Autowired
+	CategoryRepository categoryRepository;
+	
+//	カテゴリ追加
+	public void addCategory(Category ca) {
+		categoryRepository.save(ca);
+	}
+//	カテゴリ編集
+	public void editCategory(Category ca) {
+		categoryRepository.save(ca);
+	}
+//	カテゴリ削除
+	public void deleteCategory(long id) {
+		categoryRepository.deleteById(id);
+	}
+	
+	public void setTarget() {
+		TargetSetting.setTarget();
+	}
+	
 }
