@@ -11,17 +11,14 @@ import com.example.demo.Budget.Category;
 public class CalcService {
 
 	/*
-	 * リポジトリを注入
-	 */
-	@Autowired
-	CalcRepository calcRepository;
-	
-	/*
 	 * 収入と支出は、BudgetManagerってクラスで管理することにしました。
 	 * 計算系のクラスの中に入れてしまうと、総合計を出すメソッドを呼び出して何回も合計を計算しなおしてしまって効率的ではないらしい。
 	 */
 	@Autowired
-	BudgetManager budgetManager;
+	PaymentsRepository paymentsRepository;
+	
+	@Autowired
+	PaymentsService paymentsService;
 
 	
 	/*
@@ -29,10 +26,10 @@ public class CalcService {
 	 */
 	public double calculateRatioOfBudget(List<Budget> spending, Category category) {
 	    // 支出の合計を取得
-	    double totalSpending = budgetManager.getTotalSpending(spending);
+	    double totalSpending = paymentsService.getTotalSpending();
 
 	    // 特定のカテゴリの支出を取得
-	    double categorySpending = budgetManager.getCategorySpending(spending, category);
+	    double categorySpending = paymentsService.getCategorySpending(spending, category);
 	    
 	    // ゼロ除算を防ぐ
 	    if (totalSpending == 0.0) {
@@ -48,10 +45,11 @@ public class CalcService {
 	
 	/*
 	 * カテゴリごとの目標の提案値を出すメソッド
+	 * TargetMagnificationは、0.5かけとか0.8かけとか、倍率を想定。
 	 */
 	public double calculateSavingGoul(List<Budget> spending, Category category, double TargetMagnification) {
 	    // 特定のカテゴリの支出を取得
-	    double categorySpending = budgetManager.getCategorySpending(spending, category);
+	    double categorySpending = paymentsService.getCategorySpending(spending, category);
 	    
 	    //今月のカテゴリの支出に、目標倍率をかけた、「目標金額」を返す
 		return categorySpending * TargetMagnification;
