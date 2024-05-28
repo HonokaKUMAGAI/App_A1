@@ -14,7 +14,7 @@ public class Target {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long targetId;
 
-	private long householdId;
+	private long houseHoldId;
 	private long categoryId;
 	private int targetAmounf;
 

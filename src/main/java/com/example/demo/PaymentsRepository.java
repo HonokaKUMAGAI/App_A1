@@ -11,5 +11,7 @@ public interface PaymentsRepository extends JpaRepository<Payments, Long> {
 
 	public List<Payments> findAllByKind(Payments.Kind kind) ;
 	
-	public List<Payments> findAllByCategoryId(long Id) ;
+	public Payments findAllByCategoryId(long Id) ;
+	
+	
 }

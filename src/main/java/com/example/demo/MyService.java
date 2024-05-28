@@ -92,8 +92,12 @@ public class MyService {
 		categoryRepository.deleteById(id);
 	}
 	
-//	public void setTarget() {
-//		TargetSetting.setTarget();
-//	}
+	public void setTargetAmount(int amount) {
+		
+		TargetSetting.setCategoryList();
+		TargetSetting.setHouseholdList();
+		TargetSetting.setTargetAmount(amount);
+		
+	}
 	
 }
