@@ -1,46 +1,62 @@
-package com.example.demo;
-
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.example.demo.Expenses.Kind;
-
-@Service
-public class CalcService {
-
-	@Autowired
-	CalcRepository calcRepository;
-
-	@Autowired
-	MyService service;
-
-	public CalcService(CalcRepository calcRepository) {
-		this.calcRepository = calcRepository;
-	}
-
-	//Income(収入)の総合計金額を出すメソッド
-	public double getTotalIncome() {
-		double totalIncome = 0.0;
-		List<Expenses> list=service.getAllByKind(Kind.INCOME, 0);
-		for (Expenses entry : list) {//【要変数名すり合わせ】ここでは、収支の金額たち（配列）をExpensesListとしています。
-			if (entry.getKind() == Kind.INCOME) {
-				totalIncome += entry.getAmount();
-			}
-		}
-		return totalIncome;
-	}
-
-	//Expense(支出)の総合計金額を出すメソッド
-	public double getTotalSpending() {
-		double totalSpending = 0.0;
-		List<Expenses> list=service.getAllByKind(Kind.SPENDING,0);
-		for (Expenses entry : list) {//【要変数名すり合わせ】ここでは、収支の金額たち（配列）をExpensesListとしています。
-			if (entry.getKind() == Kind.SPENDING) {
-				totalSpending += entry.getAmount();
-			}
-		}
-		return totalSpending;
-	}
-}
+//package com.example.demo;
+//
+//import java.util.List;
+//
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.stereotype.Service;
+//
+//import com.example.demo.Budget.Category;
+//
+//@Service
+//public class CalcService {
+//	
+//	/*
+//	 * 収入と支出は、BudgetManagerってクラスで管理することにしました。
+//	 * 計算系のクラスの中に入れてしまうと、総合計を出すメソッドを呼び出して何回も合計を計算しなおしてしまって効率的ではないらしい。
+//	 */
+//	@Autowired
+//	BudgetManager budgetManager;
+//
+//	
+//	/*
+//	 * カテゴリごとの割合を算出するメソッド
+//	 */
+//	public double calculateRatioOfBudget(List<Budget> spending, Category category) {
+//	    // 支出の合計を取得
+//	    double totalSpending = budgetManager.getTotalSpending(spending);
+//
+//	    // 特定のカテゴリの支出を取得
+//	    double categorySpending = budgetManager.getCategorySpending(spending, category);
+//	    
+//	    // ゼロ除算を防ぐ
+//	    if (totalSpending == 0.0) {
+//	        System.out.println("ゼロ除算です。または支出がありません");
+//	        return 0.0;
+//	    }
+//
+//	    // カテゴリの支出が全支出に対してどの割合を占めるかを計算して返す
+//	    return categorySpending / totalSpending * 100.0; // パーセンテージで返す
+//	}
+//
+//
+//	
+//	/*
+//	 * カテゴリごとの目標の提案値を出すメソッド
+//	 */
+//	public double calculateSavingGoul(List<Budget> spending, Category category, double TargetMagnification) {
+//	    // 特定のカテゴリの支出を取得
+//	    double categorySpending = budgetManager.getCategorySpending(spending, category);
+//	    
+//	    //今月のカテゴリの支出に、目標倍率をかけた、「目標金額」を返す
+//		return categorySpending * TargetMagnification;
+//
+//	}
+//	
+//}
+//
+//
+//
+//
+//
+//
+//

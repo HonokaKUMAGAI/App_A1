@@ -63,15 +63,15 @@ public class MyService {
 				.collect(Collectors.toList());
 	}
 
-	public void editTodo(Expenses ex) {
+	public void editExpense(Expenses ex) {
 		expensesRepository.save(ex);
 	}
 
-	public void deleteTodo(int id) {
+	public void deleteExpenses(long id) {
 		expensesRepository.deleteById(id);
 	}
 
-	public void addTodo(Expenses ex) {
+	public void addExpenses(Expenses ex) {
 		expensesRepository.save(ex);
 	}
 }
