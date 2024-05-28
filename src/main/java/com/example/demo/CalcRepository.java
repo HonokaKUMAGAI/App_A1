@@ -3,7 +3,9 @@ package com.example.demo;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface CalcRepository extends JpaRepository<Expenses, Integer>{
-	List<Expenses> findByType(Expenses.kinds type);
+@Repository
+public interface CalcRepository extends JpaRepository<Budget, Integer>{
+	List<Budget> findByKind(Budget.Kind kind);
 }
