@@ -40,11 +40,13 @@
 	            <tr th:each="payments : ${payments}">
 	                <td th:text="${payments.categoryId}">費用</td>
 	                <td th:text="${payments.amount} + '円'">金額</td>
-	                <td th:text="${#dates.format(payments.date, 'yyyy-MM-dd')}">日付</td>
-	
+					<td th:text="${payments.date != null ? payments.date.format(T(java.time.format.DateTimeFormatter).ofPattern('yyyy-MM-dd')) : ''}">日付</td>
 	                <td>
-						<a th:href="@{/expense/edit/{paymentsId}(paymentsId=${payment.paymentsId})}"><button>編集</button></a>
-						<a th:href="@{/expense/delete/{paymentsId}(paymentsId=${payment.paymentsId})}" onclick="return confirm('本当に削除しますか？');"><button>削除</button></a>
+						<a th:href="@{/payments/edit/{paymentsId}						(paymentsId=${payments.paymentsId})}"><button>編集</button></a>
+						<a th:href="@{/payments/delete/{paymentsId}						(paymentsId=${payments.paymentsId})}" onclick="return confirm('本当に削除しますか？');"><button>削除</button></a>
+						
+<!--						payments/edit/{paymentsId}(paymentsId=${payments.paymentsId})}-->
+<!--						payments/delete/{paymentsId}(paymentsId=${payments.paymentsId})}-->
 	                </td>
 	            </tr>
 	        </tbody>

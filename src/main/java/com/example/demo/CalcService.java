@@ -18,7 +18,7 @@ public class CalcService {
 	PaymentsRepository paymentsRepository;
 	
 	@Autowired
-	PaymentsService paymentsService;
+	CalcService_sum calcService_sum;
 
 	
 	/*
@@ -26,10 +26,10 @@ public class CalcService {
 	 */
 	public double calculateRatioOfBudget(List<Payments> spending, Category category) {
 	    // 支出の合計を取得
-	    double totalSpending = paymentsService.getTotalSpending();
+	    double totalSpending = calcService_sum.getTotalSpending();
 
 	    // 特定のカテゴリの支出を取得
-	    double categorySpending = paymentsService.getCategorySpending(spending, category);
+	    double categorySpending = calcService_sum.getCategorySpending(spending, category);
 	    
 	    // ゼロ除算を防ぐ
 	    if (totalSpending == 0.0) {
@@ -49,7 +49,7 @@ public class CalcService {
 	 */
 	public double calculateSavingGoul(List<Payments> spending, Category category, double TargetMagnification) {
 	    // 特定のカテゴリの支出を取得
-	    double categorySpending = paymentsService.getCategorySpending(spending, category);
+	    double categorySpending = calcService_sum.getCategorySpending(spending, category);
 	    
 	    //今月のカテゴリの支出に、目標倍率をかけた、「目標金額」を返す
 		return categorySpending * TargetMagnification;

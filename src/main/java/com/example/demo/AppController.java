@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -19,6 +21,12 @@ public class AppController {
 
 	@Autowired
 	MyService service;
+	
+	@Autowired
+    private PaymentsService paymentsService;
+    
+    @Autowired
+    private CalcService_sum calcService_sum;
 
 	private Payments.Kind kind = Payments.Kind.SPENDING;
 
@@ -65,4 +73,42 @@ public class AppController {
 		service.setTargetAmount(input);
 		return "redirect:/home";
 	}
+	
+
+    @GetMapping("/")
+    public String index(Model model) {
+        model.addAttribute("payments", paymentsService.findAll());
+        return "index";
+    }
+
+    @GetMapping("/payments/new")
+    public String newExpense(Model model) {
+        model.addAttribute("payments", new Payments());
+        return "paymentsForm";
+    }
+
+//    @PostMapping("/payments")
+//    public String saveExpense(@ModelAttribute Payments payments) {
+//    	myService.save(payments);
+//        return "redirect:/";
+//    }
+    
+    @PostMapping("/payments")
+    public String saveExpense(@ModelAttribute Payments payments) {
+    	paymentsService.save(payments);
+        return "redirect:/";
+    }
+
+    @GetMapping("/payments/edit/{paymentsId}")
+    public String editExpense(@PathVariable("paymentsId") Long id, Model model) {
+        model.addAttribute("payments", paymentsService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid paymentsId:" + id)));
+        return "paymentsForm";
+    }
+
+    @GetMapping("/payments/delete/{paymentsId}")
+    public String deleteExpense(@PathVariable("paymentsId") Long id) {
+    	paymentsService.deleteById(id);
+        return "redirect:/";
+    }
+    
 }
