@@ -17,8 +17,8 @@ public class HouseholdService {
         return householdRepository.findAll();
     }
 
-    public void save(Household expense) {
-    	householdRepository.save(expense);
+    public void save(Household payments) {
+    	householdRepository.save(payments);
     }
 
     public Optional<Household> findById(Long id) {

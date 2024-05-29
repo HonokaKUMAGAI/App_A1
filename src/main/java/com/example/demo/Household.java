@@ -16,4 +16,5 @@ public class Household {
 	
 	private String name;
 	private long userId;
+
 }

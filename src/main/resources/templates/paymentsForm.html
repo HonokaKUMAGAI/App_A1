@@ -9,19 +9,29 @@
 <body>
 
     <h1>家計簿</h1>
-    <form th:action="@{/expense}" th:object="${expense}" method="post">
+    <form th:action="@{/payments}" th:object="${payments}" method="post">
         <input type="hidden" th:field="*{paymentsId}" />
         <div>
-            <label>費用:</label>
-            <input type="text" list="example" th:field="*{name}" required />
-            <datalist id="example">
-                <option value="食費"></option>
-                <option value="住居費"></option>
-                <option value="水道光熱費"></option>
-                <option value="通信費"></option>
-                <option value="医療費"></option>
-                <option value="交通費"></option>
-            </datalist>
+			<label>カテゴリ:</label>
+			<select th:field="*{categoryId}" required>
+			    <option value=1>食費</option>
+			    <option value=2>住居費</option>
+			    <option value=3>水道光熱費</option>
+			    <option value=4>通信費</option>
+			    <option value=5>医療費</option>
+			    <option value=6>交通費</option>
+			</select>
+			
+<!--            <label>カテゴリ:</label>-->
+<!--            <input type="text" list="example" th:field="*{categoryName}" required />-->
+<!--            <datalist id="example">-->
+<!--                <option value="食費"></option>-->
+<!--                <option value="住居費"></option>-->
+<!--                <option value="水道光熱費"></option>-->
+<!--                <option value="通信費"></option>-->
+<!--                <option value="医療費"></option>-->
+<!--                <option value="交通費"></option>-->
+<!--            </datalist>-->
         </div>
         <div>
             <label>金額:</label>

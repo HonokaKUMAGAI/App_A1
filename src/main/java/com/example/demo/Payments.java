@@ -18,6 +18,12 @@ public class Payments {
 	
 	private long householdId;
 	private long categoryId;
+	
+	/*
+	 * ちょっとカテゴリ（出費）部分で動かないので一時的にカテゴリ名を設定してます。
+	 */
+	private String categoryName;
+	
 	private long userId;
 	private int amount;
 	private LocalDate date;
