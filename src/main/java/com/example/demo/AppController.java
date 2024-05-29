@@ -22,7 +22,9 @@ public class AppController {
 
 	private Payments.Kind kind = Payments.Kind.SPENDING;
 
-	private int user = 0;
+	private long user = 0;
+	
+	private long hh=0;
 
 	@GetMapping("/home")
 	public String getPaymentsList(Model model, @RequestParam(value = "sort", required = false) String sort) {
@@ -30,20 +32,20 @@ public class AppController {
 		if (sort != null) {
 			switch (sort) {
 			case "category":
-				pays = service.getKindSortedByCategory(kind, user);
+				pays = service.getKindSortedByCategory(kind, user,hh);
 				break;
 			case "date":
-				pays = service.getKindSortedByDate(kind, user);
+				pays = service.getKindSortedByDate(kind, user,hh);
 				break;
 			case "amount":
-				pays = service.getKindSortedByAmount(kind, user);
+				pays = service.getKindSortedByAmount(kind, user,hh);
 				break;
 			default:
-				pays = service.getAllByKind(kind, user);
+				pays = service.getAllByKind(kind, user,hh);
 				break;
 			}
 		} else {
-			pays = service.getAllByKind(kind, user);
+			pays = service.getAllByKind(kind, user,hh);
 		}
 		model.addAttribute("pays", pays);
 		return "paymentsList";

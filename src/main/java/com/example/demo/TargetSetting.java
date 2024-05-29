@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class TargetSetting {
 
+	
 	@Autowired
 	static
 	CategoryRepository categoryRepository;
@@ -22,6 +23,7 @@ public class TargetSetting {
 		houseHoldList = houseHoldRepository.findAll();
 	}
 	
+//	目標金額の設定
 	@Autowired
 	static TargetRepository targetRepository;
 

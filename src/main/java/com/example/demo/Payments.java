@@ -23,37 +23,16 @@ public class Payments {
 	private LocalDate date;
 	private String memo;
 
-	private enum Roop {
-		daily, weekly, monthly, everyyear
+	public enum Period {
+		DAILY, WEEKLY,MONTHLY, EVERY_YEAR
 	}
 	
-	private Roop roop;
+	private Period period;
 
 	public enum Kind {
 		INCOME, SPENDING, OTHER //収入はINCOME、支出はSPENDING、一応その他OTHERも
 	}
 
 	private Kind kind;
-
-//	public Kind getKind() {
-//		return this.kind;
-//	}
-//
-//	public void setKind(Kind kind) {
-//		this.kind = kind;
-//	}
-//
-//	public boolean isIncome() {
-//		return this.kind == Kind.INCOME;
-//	}
-//
-//	public boolean isSpending() {
-//		return this.kind == Kind.SPENDING;
-//	}
-//
-//	public LocalDate getDate() {
-//		// TODO 自動生成されたメソッド・スタブ
-//		return this.date;
-//	}
 
 }

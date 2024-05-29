@@ -14,49 +14,49 @@ public class MyService {
 	@Autowired
 	PaymentsRepository paymentsRepository;
 
-	//収支毎に
-	public List<Payments> getAllByKind(Kind kind, int user) {
+	//収支毎に取得　ユーザー毎に取得可能
+	public List<Payments> getAllByKind(Kind kind, long user,long hh) {
 		List<Payments> list = null;
 		if (user != 0)
-			list = paymentsRepository.findAllByKindAndUserId(kind, user);
+			list = paymentsRepository.findAllByKindAndUserIdAndhouseHoldId(kind, user,hh);
 		else
-			list = paymentsRepository.findAllByKind(kind);
+			list = paymentsRepository.findAllByKindAndhouseHoldId(kind,hh);
 		return list;
 	}
 
-	//	収支毎にカテゴリでソート
-	public List<Payments> getKindSortedByCategory(Kind kind, int user) {
+	//	収支毎にカテゴリでソート　ユーザー毎に取得可能
+	public List<Payments> getKindSortedByCategory(Kind kind, long user,long hh) {
 		List<Payments> Expenses;
 		if (user != 0) {
-			Expenses = paymentsRepository.findAllByKindAndUserId(kind, user);
+			Expenses = paymentsRepository.findAllByKindAndUserIdAndhouseHoldId(kind, user,hh);
 		} else {
-			Expenses = paymentsRepository.findAllByKind(kind);
+			Expenses = paymentsRepository.findAllByKindAndhouseHoldId(kind,hh);
 		}
 		return Expenses.stream()
 				.sorted((t1, t2) -> Long.compare(t1.getCategoryId(), t2.getCategoryId()))
 				.collect(Collectors.toList());
 	}
 
-	//	収支毎に日付でソート
-	public List<Payments> getKindSortedByDate(Kind kind, int user) {
+	//	収支毎に日付でソート　ユーザー毎に取得可能
+	public List<Payments> getKindSortedByDate(Kind kind, long user,long hh) {
 		List<Payments> Expenses;
 		if (user != 0) {
-			Expenses = paymentsRepository.findAllByKindAndUserId(kind, user);
+			Expenses = paymentsRepository.findAllByKindAndUserIdAndhouseHoldId(kind, user,hh);
 		} else {
-			Expenses = paymentsRepository.findAllByKind(kind);
+			Expenses = paymentsRepository.findAllByKindAndhouseHoldId(kind,hh);
 		}
 		return Expenses.stream()
 				.sorted((t1, t2) -> t1.getDate().compareTo(t2.getDate()))
 				.collect(Collectors.toList());
 	}
 
-	//	収支毎に金額でソート
-	public List<Payments> getKindSortedByAmount(Kind kind, int user) {
+	//	収支毎に金額でソート　ユーザー毎に取得可能
+	public List<Payments> getKindSortedByAmount(Kind kind, long user,long hh) {
 		List<Payments> Expenses;
 		if (user != 0) {
-			Expenses = paymentsRepository.findAllByKindAndUserId(kind, user);
+			Expenses = paymentsRepository.findAllByKindAndUserIdAndhouseHoldId(kind, user,hh);
 		} else {
-			Expenses = paymentsRepository.findAllByKind(kind);
+			Expenses = paymentsRepository.findAllByKindAndhouseHoldId(kind,hh);
 		}
 		return Expenses.stream()
 				.sorted((t1, t2) -> Integer.compare(t1.getAmount(), t2.getAmount()))
@@ -92,6 +92,7 @@ public class MyService {
 		categoryRepository.deleteById(id);
 	}
 	
+//	目標金額設定
 	public void setTargetAmount(int amount) {
 		
 		TargetSetting.setCategoryList();
@@ -99,5 +100,17 @@ public class MyService {
 		TargetSetting.setTargetAmount(amount);
 		
 	}
+    
+    public List<Payments> findAll() {
+        return paymentsRepository.findAll();
+    }
+    
+    public List<Payments> getKakeiboByCategories(List<String> categories) {
+        return paymentsRepository.findByCategoryIn(categories);
+    }
+    
+    public Payments save(Payments kakeibo) {
+        return paymentsRepository.save(kakeibo);
+    }
 	
 }

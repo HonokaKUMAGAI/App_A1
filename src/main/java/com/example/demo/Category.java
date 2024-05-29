@@ -15,5 +15,11 @@ public class Category {
 	private long categoryId;
 	
 	private String name;
+	
+	public enum Kind {
+		INCOME, SPENDING, OTHER //収入はINCOME、支出はSPENDING、一応その他OTHERも
+	}
+
+	private Kind kind;
 
 }
