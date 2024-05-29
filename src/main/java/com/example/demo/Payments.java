@@ -17,7 +17,7 @@ public class Payments {
 	private long paymentsId;
 	
 	private long householdId;
-	private long categoryId;
+	private Long categoryId;
 	
 	/*
 	 * ちょっとカテゴリ（出費）部分で動かないので一時的にカテゴリ名を設定してます。
@@ -26,6 +26,7 @@ public class Payments {
 	
 	private long userId;
 	private int amount;
+	
 	private LocalDate date;
 	private String memo;
 	
@@ -67,4 +68,8 @@ public class Payments {
 	}
 	private Category category;
 	
+	
+	public int getAmount() {
+        return amount;
+    }
 }

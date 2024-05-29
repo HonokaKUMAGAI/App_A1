@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,40 +26,40 @@ public class MyService {
 	}
 
 	//	収支毎にカテゴリでソート
-	public List<Payments> getKindSortedByCategory(Kind kind, int user) {
-		List<Payments> Expenses;
+	public List<Payments> getKindSortedByCategory(Kind kind, long user) {
+		List<Payments> Payments;
 		if (user != 0) {
-			Expenses = paymentsRepository.findAllByKindAndUserId(kind, user);
+			Payments = paymentsRepository.findByKindAndUserId(kind, user);
 		} else {
-			Expenses = paymentsRepository.findAllByKind(kind);
+			Payments = paymentsRepository.findByKind(kind);
 		}
-		return Expenses.stream()
+		return Payments.stream()
 				.sorted((t1, t2) -> Long.compare(t1.getCategoryId(), t2.getCategoryId()))
 				.collect(Collectors.toList());
 	}
 
 	//	収支毎に日付でソート
-	public List<Payments> getKindSortedByDate(Kind kind, int user) {
-		List<Payments> Expenses;
+	public List<Payments> getKindSortedByDate(LocalDate date, int user) {
+		List<Payments> Payments;
 		if (user != 0) {
-			Expenses = paymentsRepository.findAllByKindAndUserId(kind, user);
+			Payments = paymentsRepository.findByDateAndUserId(date, user);
 		} else {
-			Expenses = paymentsRepository.findAllByKind(kind);
+			Payments = paymentsRepository.findByDate(date);
 		}
-		return Expenses.stream()
+		return Payments.stream()
 				.sorted((t1, t2) -> t1.getDate().compareTo(t2.getDate()))
 				.collect(Collectors.toList());
 	}
 
 	//	収支毎に金額でソート
-	public List<Payments> getKindSortedByAmount(Kind kind, int user) {
-		List<Payments> Expenses;
+	public List<Payments> getKindSortedByAmount(int amount, int user) {
+		List<Payments> Payments;
 		if (user != 0) {
-			Expenses = paymentsRepository.findAllByKindAndUserId(kind, user);
+			Payments = paymentsRepository.findByAmountAndUserId(amount, user);
 		} else {
-			Expenses = paymentsRepository.findAllByKind(kind);
+			Payments = paymentsRepository.findByAmount(amount);
 		}
-		return Expenses.stream()
+		return Payments.stream()
 				.sorted((t1, t2) -> Integer.compare(t1.getAmount(), t2.getAmount()))
 				.collect(Collectors.toList());
 	}

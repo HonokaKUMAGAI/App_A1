@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+
 @Controller
 public class AppController {
 
@@ -23,39 +24,47 @@ public class AppController {
 	MyService service;
 	
 	@Autowired
+	CalcService_sum calcService_sum;
+	
+	@Autowired
+	CalcService calcService;
+	
+	@Autowired
     private PaymentsService paymentsService;
     
-    @Autowired
-    private CalcService_sum calcService_sum;
+	@Autowired
+	private PaymentsRepository paymentsRepository;
+	
 
 	private Payments.Kind kind = Payments.Kind.SPENDING;
 
 	private int user = 0;
 
-	@GetMapping("/home")
-	public String getPaymentsList(Model model, @RequestParam(value = "sort", required = false) String sort) {
-		List<Payments> pays;
-		if (sort != null) {
-			switch (sort) {
-			case "category":
-				pays = service.getKindSortedByCategory(kind, user);
-				break;
-			case "date":
-				pays = service.getKindSortedByDate(kind, user);
-				break;
-			case "amount":
-				pays = service.getKindSortedByAmount(kind, user);
-				break;
-			default:
-				pays = service.getAllByKind(kind, user);
-				break;
-			}
-		} else {
-			pays = service.getAllByKind(kind, user);
-		}
-		model.addAttribute("pays", pays);
-		return "paymentsList";
-	}
+//	@GetMapping("/home")
+//	@PostMapping("/payments/sort")
+//	public String getPaymentsList(Model model, @RequestParam(value = "sort", required = false) String sort) {
+//		List<Payments> pays;
+//		if (sort != null) {
+//			switch (sort) {
+//			case "category":
+//				pays = service.getKindSortedByCategory(kind, user);
+//				break;
+//			case "date":
+//				pays = service.getKindSortedByDate(kind, user);
+//				break;
+//			case "amount":
+//				pays = service.getKindSortedByAmount(kind, user);
+//				break;
+//			default:
+//				pays = service.getAllByKind(kind, user);
+//				break;
+//			}
+//		} else {
+//			pays = service.getAllByKind(kind, user);
+//		}
+//		model.addAttribute("pays", pays);
+//		return "index";
+//	}
 
 	@PostMapping("/button")
 	public String handleButton(@RequestParam(name = "input", required = false, defaultValue = "") long input,
@@ -78,6 +87,7 @@ public class AppController {
     @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("payments", paymentsService.findAll());
+        System.out.println(calcService_sum.getTotalIncome());
         return "index";
     }
 
@@ -110,5 +120,33 @@ public class AppController {
     	paymentsService.deleteById(id);
         return "redirect:/";
     }
+    
+    
+    @PostMapping("/payments/sort")
+    public String sort(@RequestParam("sortType") String sortType, Model model) {
+    	Payments payments = new Payments();
+        List<Payments> sortedPayments = null;
+        switch (sortType) {
+            case "categoryId":
+//            	sortedPayments = paymentsRepository.findByKind(payments.getKind());
+            	sortedPayments = service.getKindSortedByCategory(payments.getKind(), payments.getUserId());
+//            	model.addAttribute("payments", paymentsRepository.findByKind(payments.getKind()));
+                break;
+            case "date":
+            	sortedPayments = paymentsRepository.findByDate(payments.getDate());
+                break;
+            case "amount":
+            	sortedPayments = paymentsRepository.findByAmount(payments.getAmount());
+                break;
+            default:
+                // デフォルトでは追加した順に表示する
+            	sortedPayments = paymentsRepository.findAll();
+                break;
+        }
+        model.addAttribute("payments", sortedPayments);
+        return "index"; // ソート後のデータを表示するHTMLファイルの名前を指定
+    }
+
+
     
 }

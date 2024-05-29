@@ -19,16 +19,19 @@ public class CalcService_sum {
 
 	@Autowired
 	MyService service;
+	@Autowired
+	private PaymentsRepository paymentsRepository;
 
 	/*
 	 * 「収入」の合計を出します
 	 */
 	public double getTotalIncome() {
 		double totalIncome = 0.0;
-		List<Payments> list = service.getAllByKind(Kind.INCOME, 0);
+		List<Payments> list = paymentsRepository.findAllByKind(Kind.INCOME);
 		for (Payments entry : list) {//【要変数名すり合わせ】ここでは、収支の金額たち（配列）をExpensesListとしています。
 			totalIncome += entry.getAmount();
 		}
+		System.out.println("ここまで実行はできている"+totalIncome);
 		return totalIncome;
 	}
 
