@@ -20,6 +20,10 @@ public class PaymentsService {
     public void save(Payments payments) {
     	paymentsRepository.save(payments);
     }
+    
+    public List<Payments> getKakeiboByCategories(List<String> categories) {
+        return paymentsRepository.findByCategoryIn(categories);
+    }
 
     public Optional<Payments> findById(Long id) {
         return paymentsRepository.findById(id);

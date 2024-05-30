@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
 @Data
@@ -17,7 +18,9 @@ public class Payments {
 	private long paymentsId;
 	
 	private long householdId;
-	private Long categoryId;
+	
+	@ManyToOne
+	private Category category;
 	
 	/*
 	 * ちょっとカテゴリ（出費）部分で動かないので一時的にカテゴリ名を設定してます。
@@ -53,21 +56,6 @@ public class Payments {
 	    OTHER //収入はINCOME、支出はSPENDING、一応その他OTHERも
 	}
 	private Kind kind;
-	
-	
-	/*
-	 * カテゴリ分け
-	 */
-	public enum Category {
-	    FOOD,           // 食費
-	    FIXED_COSTS,    // 固定費
-	    UTILITIES,      // 光熱費
-	    TRANSPORT,      // 交通費
-	    ENTERTAINMENT,  // 娯楽費
-	    OTHER           // その他
-	}
-	private Category category;
-	
 	
 	public int getAmount() {
         return amount;

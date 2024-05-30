@@ -31,5 +31,10 @@ public interface PaymentsRepository extends JpaRepository<Payments, Long> {
     public List<Payments> findAllByKind(Kind kind);
 	public List<Payments> findAllByKindAndUserId(Kind kind, int user);
 //	public List<Payments> findAllByKind(Kind kind, int user);
+	
+	/*
+	 * カテゴリごとの集計（複数選択対応）
+	 */
+	List<Payments> findByCategoryIn(List<String> categories);
 
 }

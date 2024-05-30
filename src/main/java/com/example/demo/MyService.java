@@ -34,7 +34,7 @@ public class MyService {
 			Payments = paymentsRepository.findByKind(kind);
 		}
 		return Payments.stream()
-				.sorted((t1, t2) -> Long.compare(t1.getCategoryId(), t2.getCategoryId()))
+				.sorted((t1, t2) -> Long.compare(t1.getCategory().getCategoryId(), t2.getCategory().getCategoryId()))
 				.collect(Collectors.toList());
 	}
 
@@ -98,7 +98,10 @@ public class MyService {
 		TargetSetting.setCategoryList();
 		TargetSetting.setHouseholdList();
 		TargetSetting.setTargetAmount(amount);
-		
+	}
+	
+	public Payments save(Payments payment) {
+		return paymentsRepository.save(payment);
 	}
 	
 }

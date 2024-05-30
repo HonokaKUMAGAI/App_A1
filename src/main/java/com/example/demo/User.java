@@ -5,9 +5,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@NoArgsConstructor
 public class User {
 
 	@Id
@@ -17,4 +19,10 @@ public class User {
 	private String password;
 	private String username;
 	private String email;
+	
+	public User (String _name, String _email, String _password) {
+		this.username = _name;
+		this.email = _email;
+		this.password = _password;
+	}
 }
