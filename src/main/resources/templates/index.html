@@ -1,18 +1,62 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" type="text/css" href="/css/styles.css">
+	<link rel="stylesheet" type="text/css" th:href="@{/style.css}">
 	<title>【サービスのタイトル決めないとね】</title>
 </head>
 
+
 <body>
-	<h1>みんなで作っていこう家計簿アプリ</h1>
-	<h2>reactとspring bootの連結をしたよーー！！</h2>
-	<p><a href="https://github.com/Keigo-Matsuo/KakeiboApp">spring bootのソース</a></p>
-	<p><a href="https://github.com/Keigo-Matsuo/KakeiboApp-frontend">reactのソース</a></p>
+	<h1>家計簿管理サイト</h1>
+
+	<form action="/payments/sort" method="post">
+		<label for="sortType">ソート方法:</label>
+		<select name="sortType" id="sortType">
+			<option value="categoryId">カテゴリでソート</option>
+			<option value="date">日付でソート</option>
+			<option value="amount">金額でソート</option>
+		</select>
+		<input type="submit" value="ソートする">
+	</form>
+
+
+	<table>
+		<thead>
+			<tr>
+				<th>カテゴリ</th>
+				<th>金額</th>
+				<th>登録日付</th>
+<!--				<th>memo</th>-->
+<!--				<th>userID</th>-->
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="payments : ${payments}">
+				<td th:text="${payments.categoryId}">カテゴリ</td>
+				<td th:text="${payments.amount} + '円'">金額</td>
+				<td
+					th:text="${payments.date != null ? payments.date.format(T(java.time.format.DateTimeFormatter).ofPattern('yyyy-MM-dd')) : ''}">
+					日付</td>
+				<td>
+<!--				<td th:text="${payments.memo}">メモ内容</td>-->
+<!--				<td th:text="${payments.userId}">ユーザID</td>-->
+
+				<a th:href="@{/payments/edit/{paymentsId}(paymentsId=${payments.paymentsId})}"><button>編集</button></a>
+				<a th:href="@{/payments/delete/{paymentsId}(paymentsId=${payments.paymentsId})}"
+					onclick="return confirm('本当に削除しますか？');"><button>削除</button></a>
+
+				<!--						payments/edit/{paymentsId}(paymentsId=${payments.paymentsId})}-->
+				<!--						payments/delete/{paymentsId}(paymentsId=${payments.paymentsId})}-->
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<a href="/payments/new"><button>新規登録</button></a>
 </body>
+
 
 </html>

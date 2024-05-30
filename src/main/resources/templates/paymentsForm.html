@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>家計簿</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
+</head>
+
+<body>
+
+    <h1>家計簿</h1>
+    <form th:action="@{/payments}" th:object="${payments}" method="post">
+        <input type="hidden" th:field="*{paymentsId}" />
+        <div>
+			<label>カテゴリ:</label>
+			<select th:field="*{categoryId}" required>
+			    <option value=1>食費</option>
+			    <option value=2>住居費</option>
+			    <option value=3>水道光熱費</option>
+			    <option value=4>通信費</option>
+			    <option value=5>医療費</option>
+			    <option value=6>交通費</option>
+			</select>
+			
+<!--            <label>カテゴリ:</label>-->
+<!--            <input type="text" list="example" th:field="*{categoryName}" required />-->
+<!--            <datalist id="example">-->
+<!--                <option value="食費"></option>-->
+<!--                <option value="住居費"></option>-->
+<!--                <option value="水道光熱費"></option>-->
+<!--                <option value="通信費"></option>-->
+<!--                <option value="医療費"></option>-->
+<!--                <option value="交通費"></option>-->
+<!--            </datalist>-->
+        </div>
+        <div>
+            <label>金額:</label>
+            <input type="number" min="0" th:field="*{amount}" step="100" list="example2" required /><small>円</small>
+            <datalist id="example2">
+                <option value="5000"></option>
+                <option value="10000"></option>
+                <option value="20000"></option>
+                <option value="30000"></option>
+                <option value="40000"></option>
+                <option value="50000"></option>
+            </datalist>
+        </div>
+
+        <div>
+            <label>登録日付:</label>
+            <input type="date" id="today" th:field="*{date}" min="1000-01-01" max="9999-12-31" required />
+        </div>
+        <div>
+            <div style="display:flex;">メモ：</div><textarea rows="9" cols="30" maxlength="256"
+                placeholder="ご自由に入力してください"></textarea>
+        </div>
+        <p>
+            <button type="submit">登録</button>
+        </p>
+    </form>
+    <p>
+        <a href="/"><button>キャンセル</button></a>
+    </p>
+
+    <script type="text/javascript">
+        //今日の日時を表示
+        window.onload = function () {
+            //今日の日時を表示
+            var date = new Date()
+            var year = date.getFullYear()
+            var month = date.getMonth() + 1
+            var day = date.getDate()
+
+            var toTwoDigits = function (num, digit) {
+                num += ''
+                if (num.length < digit) {
+                    num = '0' + num
+                }
+                return num
+            }
+
+            var yyyy = toTwoDigits(year, 4)
+            var mm = toTwoDigits(month, 2)
+            var dd = toTwoDigits(day, 2)
+            var ymd = yyyy + "-" + mm + "-" + dd;
+
+            document.getElementById("today").value = ymd;
+        }
+    </script>
+
+
+</body>
+
+</html>
