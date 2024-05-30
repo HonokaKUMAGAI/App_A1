@@ -2,6 +2,7 @@ package com.example.demo;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,14 +18,14 @@ public class Payments {
 	private long paymentsId;
 	
 	private long householdId;
+	
+	@Column(name = "category_id")
 	private Long categoryId;
 	
-	/*
-	 * ちょっとカテゴリ（出費）部分で動かないので一時的にカテゴリ名を設定してます。
-	 */
+	private long user;
 	private String categoryName;
 	
-	private long userId;
+	private Long userId;
 	private int amount;
 	
 	private LocalDate date;
