@@ -133,7 +133,7 @@ public class AppController {
 //            	model.addAttribute("payments", paymentsRepository.findByKind(payments.getKind()));
                 break;
             case "date":
-            	sortedPayments = paymentsRepository.findByDate(payments.getDate());
+            	sortedPayments = service.getKindSortedByDate(payments.getDate(), payments.getUserId());
                 break;
             case "amount":
             	sortedPayments = paymentsRepository.findByAmount(payments.getAmount());

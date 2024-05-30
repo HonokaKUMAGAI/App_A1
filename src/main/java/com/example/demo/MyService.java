@@ -39,7 +39,7 @@ public class MyService {
 	}
 
 	//	収支毎に日付でソート
-	public List<Payments> getKindSortedByDate(LocalDate date, int user) {
+	public List<Payments> getKindSortedByDate(LocalDate date, long user) {
 		List<Payments> Payments;
 		if (user != 0) {
 			Payments = paymentsRepository.findByDateAndUserId(date, user);
@@ -52,7 +52,7 @@ public class MyService {
 	}
 
 	//	収支毎に金額でソート
-	public List<Payments> getKindSortedByAmount(int amount, int user) {
+	public List<Payments> getKindSortedByAmount(int amount, long user) {
 		List<Payments> Payments;
 		if (user != 0) {
 			Payments = paymentsRepository.findByAmountAndUserId(amount, user);
