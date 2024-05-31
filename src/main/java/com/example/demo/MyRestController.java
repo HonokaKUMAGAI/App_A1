@@ -20,12 +20,12 @@ public class MyRestController {
     MyService service;
         
     @GetMapping("/api/kakeibo")
-    public List<Payments> getAllKakeibo(@RequestParam(required = false) List<String> categories) {
-        if (categories == null || categories.isEmpty()) {
+    public List<Payments> getAllKakeibo(@RequestParam(required = false) List<Category> categories) {
+//        if (categories == null || categories.isEmpty()) {
             return service.findAll();
-        } else {
-            return service.getKakeiboByCategories(categories);
-        }
+//        } else {
+//            return service.getKakeiboByCategories(categories);
+//        }
     }
     
 //    家計簿データ追加処理

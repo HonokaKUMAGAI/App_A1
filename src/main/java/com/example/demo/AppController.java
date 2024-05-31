@@ -64,7 +64,11 @@ public class AppController {
 	@PostMapping("/setTargetAmount")
 	public String setTargetAmount(@RequestParam(name = "input", required = false, defaultValue = "") int input,
 			Model model) {
-		service.setTargetAmount(input);
+		//登録と同じく、ToPaymentsをかませる必要有り。
+		//下記仮のHouseHold,Category
+		HouseHold household=null;
+		Category category=null;
+		service.setTargetAmount(input,household,category);
 		return "redirect:/home";
 	}
 }

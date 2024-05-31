@@ -18,9 +18,9 @@ public class MyService {
 	public List<Payments> getAllByKind(Kind kind, long user,long hh) {
 		List<Payments> list = null;
 		if (user != 0)
-			list = paymentsRepository.findAllByKindAndUserIdAndhouseHoldId(kind, user,hh);
+			list = paymentsRepository.findAllByKindAndUserIdAndHouseholdId(kind, user,hh);
 		else
-			list = paymentsRepository.findAllByKindAndhouseHoldId(kind,hh);
+			list = paymentsRepository.findAllByKindAndHouseholdId(kind,hh);
 		return list;
 	}
 
@@ -28,9 +28,9 @@ public class MyService {
 	public List<Payments> getKindSortedByCategory(Kind kind, long user,long hh) {
 		List<Payments> Expenses;
 		if (user != 0) {
-			Expenses = paymentsRepository.findAllByKindAndUserIdAndhouseHoldId(kind, user,hh);
+			Expenses = paymentsRepository.findAllByKindAndUserIdAndHouseholdId(kind, user,hh);
 		} else {
-			Expenses = paymentsRepository.findAllByKindAndhouseHoldId(kind,hh);
+			Expenses = paymentsRepository.findAllByKindAndHouseholdId(kind,hh);
 		}
 		return Expenses.stream()
 				.sorted((t1, t2) -> Long.compare(t1.getCategoryId(), t2.getCategoryId()))
@@ -41,9 +41,9 @@ public class MyService {
 	public List<Payments> getKindSortedByDate(Kind kind, long user,long hh) {
 		List<Payments> Expenses;
 		if (user != 0) {
-			Expenses = paymentsRepository.findAllByKindAndUserIdAndhouseHoldId(kind, user,hh);
+			Expenses = paymentsRepository.findAllByKindAndUserIdAndHouseholdId(kind, user,hh);
 		} else {
-			Expenses = paymentsRepository.findAllByKindAndhouseHoldId(kind,hh);
+			Expenses = paymentsRepository.findAllByKindAndHouseholdId(kind,hh);
 		}
 		return Expenses.stream()
 				.sorted((t1, t2) -> t1.getDate().compareTo(t2.getDate()))
@@ -54,9 +54,9 @@ public class MyService {
 	public List<Payments> getKindSortedByAmount(Kind kind, long user,long hh) {
 		List<Payments> Expenses;
 		if (user != 0) {
-			Expenses = paymentsRepository.findAllByKindAndUserIdAndhouseHoldId(kind, user,hh);
+			Expenses = paymentsRepository.findAllByKindAndUserIdAndHouseholdId(kind, user,hh);
 		} else {
-			Expenses = paymentsRepository.findAllByKindAndhouseHoldId(kind,hh);
+			Expenses = paymentsRepository.findAllByKindAndHouseholdId(kind,hh);
 		}
 		return Expenses.stream()
 				.sorted((t1, t2) -> Integer.compare(t1.getAmount(), t2.getAmount()))
@@ -93,11 +93,11 @@ public class MyService {
 	}
 	
 //	目標金額設定
-	public void setTargetAmount(int amount) {
+	public void setTargetAmount(int amount,HouseHold household,Category category) {
 		
 		TargetSetting.setCategoryList();
 		TargetSetting.setHouseholdList();
-		TargetSetting.setTargetAmount(amount);
+		TargetSetting.setTargetAmount(amount,household,category);
 		
 	}
     
@@ -105,8 +105,8 @@ public class MyService {
         return paymentsRepository.findAll();
     }
     
-    public List<Payments> getKakeiboByCategories(List<String> categories) {
-        return paymentsRepository.findByCategoryIn(categories);
+    public List<Payments> getKakeiboByCategories(List<Category> categories) {
+        return paymentsRepository.findByCategoryIdIn(categories);
     }
     
     public Payments save(Payments kakeibo) {

@@ -6,37 +6,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class TargetSetting {
 
-	
 	@Autowired
-	static
-	CategoryRepository categoryRepository;
+	static CategoryRepository categoryRepository;
 	private static List<Category> categoryList;
+
 	public static void setCategoryList() {
 		categoryList = categoryRepository.findAll();
 	}
 
 	@Autowired
-	static
-	HouseHoldRepository houseHoldRepository;
+	static HouseHoldRepository houseHoldRepository;
 	private static List<HouseHold> houseHoldList;
+
 	public static void setHouseholdList() {
 		houseHoldList = houseHoldRepository.findAll();
 	}
-	
-//	目標金額の設定
+
+	//	目標金額の設定
 	@Autowired
 	static TargetRepository targetRepository;
 
-	public static void setTargetAmount(int amount) {
+	public static void setTargetAmount(int amount, HouseHold houseHold, Category category) {
 		Target target = null;
-		for (HouseHold houseHold : houseHoldList) {
-			target.setHouseHoldId(houseHold.getHouseHoldId());
-			for (Category category : categoryList) {
-				target.setCategoryId(category.getCategoryId());
-				target.setTargetAmounf(amount);
-				targetRepository.save(target);
-			}
-		}
+		target.setHouseHoldId(houseHold.getHouseHoldId());
+		target.setCategoryId(category.getCategoryId());
+		target.setTargetAmounf(amount);
+		targetRepository.save(target);
+
 	}
-	
+
 }
