@@ -6,8 +6,8 @@ import lombok.Data;
 
 @Data
 public class ToPayments {
-    private long categoryId;
-    private int amount;
+    private double amount;
     private LocalDate date;
+    private String categoryId;
     private String memo;
 }

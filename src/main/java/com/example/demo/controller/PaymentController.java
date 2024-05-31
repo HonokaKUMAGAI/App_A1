@@ -19,7 +19,7 @@ import com.example.demo.entity.Payment;
 import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.HouseHoldRepository;
 import com.example.demo.repository.PaymentRepository;
-import com.example.demo.services.SortService;
+import com.example.demo.services.PaymentService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -33,7 +33,7 @@ public class PaymentController {
 	private final CategoryRepository categoryRepository;
 	private final HouseHoldRepository houseHoldRepository;
 
-	private final SortService sortService;
+	private final PaymentService sortService;
 
 	// ある家計簿の収支レコードを全件取得
 	@GetMapping("/payments/{id}")
@@ -48,19 +48,20 @@ public class PaymentController {
 	// 収支レコードの追加
 	@PostMapping("/payments/new")
 	public Payment createPayment(@RequestBody ToPayments toPayments) {
-		Payment payment = new Payment();
+	    Payment payment = new Payment();
 
-		HouseHold houseHold = houseHoldRepository.findById(1L).orElseThrow(() -> new RuntimeException());
-		payment.setHouseHold(houseHold);
+	    HouseHold houseHold = houseHoldRepository.findById(1L).orElseThrow(() -> new RuntimeException());
+	    payment.setHouseHold(houseHold);
 
-		payment.setAmount(toPayments.getAmount());
-		payment.setDate(toPayments.getDate());
-		payment.setMemo(toPayments.getMemo());
-		Category category = categoryRepository.findById(toPayments.getCategoryId())
-				.orElseThrow(() -> new RuntimeException("Category not found"));
-		payment.setCategory(category);
-		return paymentRepository.save(payment);
+	    payment.setAmount((int) toPayments.getAmount());
+	    payment.setDate(toPayments.getDate());
+	    payment.setMemo(toPayments.getMemo());
+	    Category category = categoryRepository.findById(Long.parseLong(toPayments.getCategoryId()))
+	            .orElseThrow(() -> new RuntimeException("Category not found"));
+	    payment.setCategory(category);
+	    return paymentRepository.save(payment);
 	}
+
 
 //	@PostMapping("/payments/sort")@RequestParam("sortType") String sortType,
 	@GetMapping("/payments/sort/{sortType}")
@@ -87,4 +88,13 @@ public class PaymentController {
 		return sortedPayments;
 	}
 
+	
+	/*
+	 * 来月目標設定処理
+	 */
+	@GetMapping("/nextTarget")
+    public List<Payment> getNextTargetData() {
+        return paymentRepository.findAll();
+    }
+	
 }
